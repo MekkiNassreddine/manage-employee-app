@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  
+  api-gateway-service:
+    build:
+      context: ./api_gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+    depends_on:
+      - manage-employee-service
+      - manage-leave-work-service
+  
+  manage-employee-service:
+    build:
+      context: ./manage_employees
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - mynetwork
+  
+  manage-leave-work-service:
+    build:
+      context: ./manage_leave_work
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - mynetwork
+      
+networks:
+  mynetwork:
+   
+  
+
