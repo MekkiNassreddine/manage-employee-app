@@ -81,6 +81,21 @@ exports.findAllEpmloyees = async (req, res) => {
   }
 };
 
+exports.retriveAllEpmloyees = async (req, res) => {
+  try {
+    const data = await Employee.getAllEmployees();
+
+    if (!data || data.length === 0) {
+      res.status(404).json({ message: "No employees found." });
+    } else {
+      res.status(200).json(data);
+    }
+  } catch (err) {
+    console.error("Error:", err.message);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+
 // register a new employee  
 exports.createEmployee = async (req, res) => {
   try {
@@ -98,7 +113,7 @@ exports.createEmployee = async (req, res) => {
       id_card: req.body.id_card,
       role: "CLIENT",
       nb_leaves: 0,
-      state: "On Work"
+      state: "On-Work"
     });
 
     const result = await Employee.create(employee);
@@ -130,6 +145,8 @@ exports.loginUser = async (req, res) => {
   }
 
   try {
+    console.log("email : "+email)
+    console.log("email : "+password)
     const data = await Employee.login(email, password);
 
     if (data.kind === "not_found") {
@@ -152,22 +169,25 @@ exports.loginUser = async (req, res) => {
 };
 
 
-exports.findByIdentifyCard = (req, res) => {
 
-  Employee.findByIDCard(req.params.id, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `Not found Employee with id ${req.params.id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "Error retrieving Employee with id " + req.params.id
-        });
-      }
-    } res.status(200).json({ response: data});
-  });
+
+
+
+exports.findByIdentifyCard = async (req, res) => {
+  try {
+    const result = await Employee.findByIDCard(req.params.id);
+
+    if (!result) {
+      res.status(404).json({ message: `No employee found with Id Card ${req.params.id}.` });
+    } else {
+      res.status(200).json({ response: result });
+    }
+  } catch (err) {
+    console.error("Error:", err.message);
+    res.status(500).json({ message: "Internal server error." });
+  }
 };
+
 
 exports.updateEmployee = async (req, res) => {
   try {

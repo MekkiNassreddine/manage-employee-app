@@ -1,0 +1,93 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
+  
+
+  .loginContainer {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .loginBottom {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 600px;
+      height: 450px;
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(110, 27, 27, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+
+      .imgage {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 130px;
+        height: 130px;
+        border-radius: 30%;
+        object-fit: cover;
+      }
+      
+ 
+      .loginRight {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 20px;
+        
+        .loginform {
+          display: flex;
+          flex-direction: column;
+
+          .loginformInput {
+          
+            label {
+              display: flex;
+              align-items: center;
+              gap: 20px;
+              font-size: 20px;
+
+              .icon {
+                cursor: pointer;
+              }
+            }
+            .inputClass{
+              width: 400px;
+              padding: 5px;
+              border: none;
+              border-bottom: 1px solid gray;
+              margin-bottom: 25px;
+            }
+           
+          }
+          .divError{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            .error{
+              font-size: 20px;
+              color:rgb(210, 26, 26)
+            }
+          }
+          
+          .buttonClass {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: none;
+            background-color: teal;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+          }
+         
+        }
+      }
+    }
+  }
+}

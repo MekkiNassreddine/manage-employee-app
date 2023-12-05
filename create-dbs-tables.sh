@@ -6,7 +6,7 @@ database_created_1=false
 
 # Loop until the condition is true
 while [ "$database_created_1" != true ]; do
-  # Run the database creation commands
+
   docker exec -i db mysql -h db -u root -p'root' <<EOF
   CREATE DATABASE IF NOT EXISTS leaves_work_db;
   USE leaves_work_db;
@@ -15,7 +15,8 @@ while [ "$database_created_1" != true ]; do
     id_card_employee VARCHAR(10) NOT NULL,
     duration INT NOT NULL,
     start_date DATE NOT NULL,
-    type VARCHAR(20) NOT NULL
+    validate VARCHAR(100) NOT NULL,
+    archives VARCHAR(100) 
   );
   FLUSH PRIVILEGES;
 EOF
@@ -80,12 +81,12 @@ docker exec -i db mysql -h localhost -u root -p'root' employee_db -e "
         state
     ) VALUES (
         'Mekki', 
-        'mekki.mekki@msql.com', 
+        'nasreddine.meki@gmail.com', 
         'password123', -- Replace with the hashed password
         '1234567890',
         'ADMIN', 
         '0', 
-        'On Work'
+        'On-Work'
     );
 "
 

@@ -2,9 +2,11 @@ const express = require('express');
 const authenticateToken = require('./authenticateToken'); 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const {setupLogging} = require("./logging");
+const cors = require('cors');
 
 
 const app = express();
+app.use(cors());
 const port = 3000;
 
 setupLogging(app);
@@ -14,6 +16,12 @@ app.use('/employees', authenticateToken);
 app.use('/leaves', authenticateToken);
 
 app.use('/login', createProxyMiddleware({
+  target: 'http://manage-employee-service:8081/employees',
+  changeOrigin: true,
+  timeout: 60000,
+}));
+
+app.use('/retrive', createProxyMiddleware({
   target: 'http://manage-employee-service:8081/employees',
   changeOrigin: true,
   timeout: 60000,
@@ -117,7 +125,7 @@ app.use('/leaves/:id', createProxyMiddleware({
   },
 }));
 
-// Retrieve a single employee with id_card employee : GET function
+// Retrieve all employee vacations with id_card employee : GET function
 app.use('/leaves/identify/:id', createProxyMiddleware({
   target: 'http://manage-leave-work-service:8082', // Replace with your authentication microservice URL
   changeOrigin: true,
@@ -129,8 +137,31 @@ app.use('/leaves/identify/:id', createProxyMiddleware({
   },
 }));
 
+app.use('/leaves/state/:id', createProxyMiddleware({
+  target: 'http://manage-leave-work-service:8082', // Replace with your authentication microservice URL
+  changeOrigin: true,
+  onProxyReq: (proxyReq, req) => {
+    // Forward the decoded user information to the authentication microservice if needed
+    if (req.user) {
+      proxyReq.setHeader('X-User-Info', JSON.stringify(req.user));
+    }
+  },
+}));
+
 // Update 
-app.use('/leaves/:id', createProxyMiddleware({
+app.use('/leaves/valide/:id', createProxyMiddleware({
+  target: 'http://manage-leave-work-service:8082', // Replace with your authentication microservice URL
+  changeOrigin: true,
+  onProxyReq: (proxyReq, req) => {
+    // Forward the decoded user information to the authentication microservice if needed
+    if (req.user) {
+      proxyReq.setHeader('X-User-Info', JSON.stringify(req.user));
+    }
+  },
+}));
+
+// Update 
+app.use('/leaves/refuse/:id', createProxyMiddleware({
   target: 'http://manage-leave-work-service:8082', // Replace with your authentication microservice URL
   changeOrigin: true,
   onProxyReq: (proxyReq, req) => {

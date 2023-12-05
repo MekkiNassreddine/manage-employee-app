@@ -11,6 +11,8 @@ module.exports = app => {
     // Retrieve all employees
     router.get("/all", employees.findAllEpmloyees);
 
+    router.post("/retrive", employees.findAllEpmloyees);
+
     // Retrieve a single employee with id_card
     router.get("/identify/:id", employees.findByIdentifyCard);
   

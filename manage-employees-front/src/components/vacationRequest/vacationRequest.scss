@@ -1,0 +1,120 @@
+.datatable {
+    height: 85%;
+    padding: 20px;
+
+    .datagrid{
+      font-size: 15px;
+      text-decoration: none;
+    }
+    
+    .datatableTitle{
+      width: 100%;
+      font-size: 30px;
+      color: rgb(63, 60, 60);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .buttonTools{
+        display: flex;
+        width: 600px;
+        justify-content: space-between;
+        font-size: 16px;
+      }
+  
+      .link{
+        text-decoration: none;
+        color: green;
+        font-size: 16px;
+        font-weight: 200;
+        border: 1px solid green;
+        padding: 15px;
+        border-radius: 15px;
+        cursor: pointer;
+      }
+     
+        label {  
+          margin-left: 20px; 
+          margin-right: 20px;// Adjust margin as needed for spacing between radio buttons
+        }
+      
+      .linkTools{
+        text-decoration: none;
+        color: rgb(69, 85, 233);
+        border: 1px solid rgb(69, 85, 233);
+        font-size: 20px;
+        padding: 15px;
+        margin-right: 20px;
+        cursor: pointer;
+      }
+    }
+  
+    .cellWithImg {
+      display: flex;
+      align-items: center;
+  
+      .cellImg {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+      }
+    }
+  
+    .cellWithStatus {
+      padding: 5px;
+      border-radius: 5px;
+  
+      &.On-Work {
+        background-color: rgba(0, 128, 0, 0.05);
+        color: green;
+      }
+    
+      &.On-Vacation {
+        background-color: rgba(255, 0, 0, 0.05);
+        color: crimson;
+      }
+    }
+
+    .cellWithValidate {
+      padding: 5px;
+      border-radius: 5px;
+  
+      &.Validate {
+        color: green;
+        background-color: rgba(0, 128, 0, 0.151);
+      }
+      &.Pending {
+        color: goldenrod;
+        background-color: rgba(189, 189, 3, 0.103);
+      }
+      &.Refused {
+        color: rgb(137, 24, 5);
+        background-color: rgba(189, 189, 3, 0.103);
+      }
+    }
+  
+    .cellAction {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+  
+      .viewButton {
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: darkblue;
+        border: 1px dotted rgba(0, 0, 139, 0.596);
+        cursor: pointer;
+      }
+      
+      .deleteButton {
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: crimson;
+        border: 1px dotted rgba(220, 20, 60, 0.6);
+        cursor: pointer;
+      }
+    }
+  }

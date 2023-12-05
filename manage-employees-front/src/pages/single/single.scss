@@ -1,0 +1,103 @@
+.single {
+    display: flex;
+    width: 100%;
+    .singleContainer {
+      flex: 18;
+  
+      .top {
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+  
+        .left {
+         
+          width: 600px;
+          height: 400px;
+          -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+          box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+          padding: 20px;
+          
+  
+          .editButton {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+            font-size: 12px;
+            color: #7451f8;
+            background-color: #7551f818;
+            cursor: pointer;
+            border-radius: 0px 0px 0px 5px;
+          }
+  
+          .item {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 50px;
+  
+            .itemImg {
+              width: 200px;
+              height: 200px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+  
+            .details {
+              .itemTitle {
+                margin-bottom: 10px;
+                color: #555;
+                font-size: 25px;
+              }
+  
+              .detailItem {
+                margin-bottom: 10px;
+                font-size: 20px;
+  
+                .itemKey {
+                  font-weight: bold;
+                  color: gray;
+                  margin-right: 5px;
+                }
+  
+                .itemValue {
+                  font-weight: 300;
+                }
+                .cellWithState {
+                  padding: 5px;
+                  border-radius: 5px;
+              
+                  &.On-Work {
+                    background-color: rgba(0, 128, 0, 0.05);
+                    color: green;
+                  }
+                
+                  &.On-Vacation {
+                    background-color: rgba(255, 0, 0, 0.05);
+                    color: crimson;
+                  }
+                }
+              }
+            }
+          }
+        }
+  
+        .right {
+          flex: 2;
+        }
+      }
+  
+      .bottom {
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        padding: 20px;
+        margin: 10px 20px;
+      }
+  
+      .title {
+        font-size: 25px;
+        color: rgb(40, 36, 36);
+        margin-bottom: 20px;
+      }
+    }
+  }

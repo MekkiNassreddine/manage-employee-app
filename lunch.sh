@@ -32,5 +32,8 @@ echo ""
 echo "========== Start microservices containers =========="
 docker-compose -f ${PWD}/docker-compose.yaml up --build
 
+docker-compose -f ${PWD}/docker-compose-mysql.yaml down --remove-orphans
+docker-compose -f ${PWD}/docker-compose.yaml down --remove-orphans
+
 
 

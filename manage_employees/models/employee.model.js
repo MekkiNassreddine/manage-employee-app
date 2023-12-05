@@ -51,6 +51,8 @@ Employee.create = async (newEmployee, email) => {
 
 Employee.login = async (email, password) => {
   try {
+    console.log("model email :"+email )
+    console.log("model password :"+password )
     const [existingRows] = await sql.execute('SELECT * FROM employees WHERE email = ?', [email]);
 
     if (existingRows.length === 0) {
@@ -73,7 +75,7 @@ Employee.login = async (email, password) => {
   }
 };
 
-Employee.findByIdCard = async (id) => {
+Employee.findByIDCard = async (id) => {
   try {
     const [existingRows] = await sql.execute('SELECT * FROM employees WHERE id_card = ?', [id]);
 
@@ -81,7 +83,7 @@ Employee.findByIdCard = async (id) => {
       console.error('national ID card not found');
       return null;
     }  else  {
-      console.log("Found Employee: ", existingRows[0]);
+      console.log("Found vvvvvvvvvvvvvEmployeevvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv: ", existingRows[0]);
       return existingRows[0] 
     }
   } catch (err) {
@@ -128,11 +130,11 @@ Employee.updateById = async (id) => {
         let newState = '';
         let newNbLeaves = 0;
 
-      if (existingRows[0].state === 'On Work') {
-        newState = 'On Vacation';
+      if (existingRows[0].state === 'On-Work') {
+        newState = 'On-Vacation';
         newNbLeaves = existingRows[0].nb_leaves + 1; 
       } else {
-        newState = 'On Work';
+        newState = 'On-Work';
         newNbLeaves = existingRows[0].nb_leaves;
       }
       

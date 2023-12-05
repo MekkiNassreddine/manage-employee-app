@@ -5,40 +5,38 @@ require('body-parser');
 
 exports.createLeaveWork = async (req, res) => {
   try {
-    if (!req.body) {
+    if (!req.body || !req.body.start_date) {
       res.status(400).send({
-        message: "Content can not be empty!"
+        message: "Invalid or missing start_date in the request body!",
       });
       return;
     }
 
-    const parts = req.body.start_date.split('/');
-    const mysqlFormattedDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
-
-    console.log(mysqlFormattedDate)
-
     const leaveWork = new LeaveWork({
       id_card_employee: req.body.id_card_employee,
       duration: req.body.duration,
-      start_date: mysqlFormattedDate,
-      type: req.body.type
+      start_date: req.body.start_date,
+      validate: 'Pending',
+      archives: '',
     });
 
     const result = await LeaveWork.createNewRequest(leaveWork);
 
-    if(result){
+    if (result) {
       res.send(result);
+    } else {
+      res.status(500).send({
+        message: "Error when adding your request!",
+      });
     }
-    else 
-     res.status(500).send({
-        message: "error when adding your request  !!"
-    });
   } catch (error) {
     res.status(500).send({
-      message: error.message || "Some error occurred while creating the Employee."
+      message: error.message || "Some error occurred while creating the Request.",
     });
   }
 };
+
+
 
 // Retrieve all Leaves works from the database 
 exports.findAllLeavesWork = async (req, res) => {
@@ -56,13 +54,26 @@ exports.findAllLeavesWork = async (req, res) => {
   }
 };
 
-
-
 exports.findByIdCard = async (req, res) => {
   try{
     const result = await LeaveWork.findByIdCard(req.params.id);
     if (!result ) {
       res.status(404).json({ message: `Not found Employee with id Card : ${req.params.id}.` });
+    } else {
+      res.status(200).json(result);
+    }
+  }catch(err){
+    console.error("Error:", err.message);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+
+exports.RetrieveReqByState = async (req, res) => {
+  try{
+    const result = await LeaveWork.findReqByState(req.params.id);
+    console.log(result)
+    if (!result ) {
+      res.status(404).json({ message: `Not Pending requset : ${req.params.id}.` });
     } else {
       res.status(200).json(result);
     }
@@ -89,25 +100,26 @@ exports.findLeaveById = async (req, res) => {
 // Update a Employees identified by the id in the request
 exports.validRequest = async (req, res) => {
   try{
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
+ 
+  const result = await LeaveWork.updateValideById(req.params.id);
+
+  if (!result ) {
+    res.status(404).json({ message: `No Leave work found with Id : ${req.params.id}.` });
+  } else {
+  
+    res.status(200).json({ message: `Leave work with Id : ${req.params.id} has been updated.` });
   }
 
-  const parts = req.body.start_date.split('/');
-  const mysqlFormattedDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
+  }catch(err){
+    console.error("Error:", err.message);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
 
-  console.log(mysqlFormattedDate)
-
-  const leaveWork = new LeaveWork({
-    id_card_employee: req.body.id_card_employee,
-    duration: req.body.duration,
-    start_date: mysqlFormattedDate,
-    type: req.body.type
-  });
-
-  const result = await LeaveWork.updateById(req.params.id, leaveWork);
+exports.refuseRequest = async (req, res) => {
+  try{
+ 
+  const result = await LeaveWork.updateRefuseById(req.params.id);
 
   if (!result ) {
     res.status(404).json({ message: `No Leave work found with Id : ${req.params.id}.` });
